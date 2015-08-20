@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/css/nanoscroller.min.css" rel="stylesheet">
+
+	<style>
+        .jumbotron > h1
+        {
+            color: #ffffff;
+            text-transform: uppercase;
+            font-weight: 300;
+        }
+
+		.playlists
+		{
+			/*max-height: 400px;
+			overflow-y:scroll;*/
+		}
+		.actionDrop
+		{
+			width: 200px;
+			display: inline;
+		}
+
+        body
+        {
+            background-color: #171717;
+            color: white;
+            font-family: 'open sans', sans-serif;
+            font-weight: lighter;
+        }
+
+        .panel, .jumbotron, .panel-default > .panel-heading
+        {
+            background-color: #171717;
+            color: #d9d9d9;
+            border: none;
+            border-radius: 0px;
+        }
+
+        .panel
+        {
+            /*border: 1px solid #747474;*/
+        }
+
+        input[type=text]
+        {
+            border-radius: 500px;
+            border: none;
+            color: black;
+            padding: 5px;
+            padding-left: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        select.form-control, select.form-control > option
+        {
+            background-color: #171717;
+            color: white;
+            border: 1px solid #bababa;
+
+        }
+
+        .btn, .btn.btn-default, .btn.btn-primary
+        {
+            border: 1px solid #bababa;
+            border-radius: 500px;
+            background-color: #171717;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .btn:hover
+        {
+            border: 1px solid #ffffff;
+        }
+
+        .btn.selected-playlist
+        {
+            background-color: #690;
+        }
+
+        tr:hover td
+        {
+            background-color: #282828;
+        }
+
+        tr
+        {
+            border-top: 1px solid #282828;
+        }
+
+        thead > tr
+        {
+            border-top: none;
+        }
+
+        .table > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th
+        {
+            border-top: none;
+            border-bottom: none;
+        }
+
+        td
+        {
+            border-top: none;
+            border-bottom: none;
+        }
+
+        label, th
+        {
+            font-weight: normal;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .panel-default > .panel-heading > h3.panel-title
+        {
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .nano { background: #171717; width: 425px; height: 500px; }
+        .nano .nano-content { padding: 0px; padding-right: 10px; }
+        .nano .nano-pane   { background: #888; }
+        .nano .nano-slider { background: #111; }
+
+	</style>
+
+	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.ba-bbq/1.2.1/jquery.ba-bbq.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.nanoscroller/0.8.7/javascripts/jquery.nanoscroller.js"></script>
+<!--	<script src="jsclass/min/loader-browser.js"></script> -->
+	<script src="lol.js"></script>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="jumbotron">
+					<h1>Spotify Playlist Sets</h1>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-5">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+					    <h3 class="panel-title">Playlists</h3>
+					</div>
+				  <div class="panel-body">
+				    <form><label>Search: <input type="text" id="pFilter" /></label></form>
+                      <div class="nano">
+                          <div class="nano-content">
+                              <div class="playlists">
+                                  <table class="table table-condensed table-hover">
+                                      <thead>
+                                      <tr>
+                                          <th>Playlist Name</th>
+                                      </tr>
+                                      </thead>
+                                      <tbody id="playlistsTable">
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+				  </div>
+				</div>
+				
+			</div>
+			<div class="col-md-7">
+				<h4>Take tracks from 
+				<span id="text1">1</span> 
+				<select id="setOperation" class="form-control actionDrop">
+				  <option>which are not in</option>
+				  <option>which are also in</option>
+				  <option>and add the tracks in</option>
+				</select> 
+				<span id="text2">2</span></h4>
+				<input class="btn btn-default gen" type="button" value="View Result" id="gen">
+				<form>
+					<label>Create as Playlist: <input type="text" id="playlistName" /></label>
+					<button type="submit" id="playlistCreate" class="btn btn-default disabled">Create</button>
+				</form>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="resultTracks">
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Track Name</th>
+										</tr>
+									</thead>
+									<tbody id="resultTracksTable">
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <div class="modal fade" id="playlist-created">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Playlist Created</h4>
+                </div>
+                <div class="modal-body">
+                    <p>The playlist has been created.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+
+</html>
