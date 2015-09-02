@@ -5,7 +5,7 @@ var spotifyAPI = "https://accounts.spotify.com/authorize";
 var APIParams = {
 	client_id: '0ea4dab611da40cea8d888db992c25d2',
 	response_type: 'token',
-	redirect_uri: 'http://jackowagstaffe.me/spotify-sets',
+	redirect_uri: 'http://127.0.0.1/spotify-sets',
 	scope: 'playlist-read-private playlist-modify-public playlist-modify-private'
 }
 
@@ -33,6 +33,7 @@ else
 //get the user's ID and call gotId
 function gotAuth( auth )
 {
+	setTimeout(authExpired, auth.expires_in * 1000);
 	$("#pFilter").val("");
 	$.ajax({
 	   url: 'https://api.spotify.com/v1/me',
@@ -46,6 +47,11 @@ function gotAuth( auth )
 	});
 }
 
+function authExpired() 
+{
+	$('#auth-expired').modal('show');
+}
+
 //For once the user ID has been saved
 function gotId( userId, auth ) 
 {
@@ -56,6 +62,7 @@ function gotId( userId, auth )
 			selection2: null
 	};
 	app.playlists = {};
+	app.playlistUsers = {};
 	var firstURL = 'https://api.spotify.com/v1/users/' + userId + '/playlists';
 	getPlayList( app, firstURL );
 }
@@ -71,6 +78,7 @@ function getPlayList( app, nextURL )
 	   success: function(response) {
 	       response.items.forEach( function( item ) {
 	       		app.playlists[ item['id'] ] = item['name'] ;
+	       		app.playlistUsers[ item['id'] ] = item['owner']['id'];
 	       });
 	       
 	       if ( response.next )
@@ -134,11 +142,10 @@ function genResult( event )
 	app.gottracks = false;
 
 	//First Playlist Tracks
-	var firstURL = 'https://api.spotify.com/v1/users/' + app.userId + '/playlists/' + app.selection1 + '/tracks';
+	var firstURL = 'https://api.spotify.com/v1/users/' + app.playlistUsers[ app.selection1 ] + '/playlists/' + app.selection1 + '/tracks';
 	getTracks( app, firstURL, 1 );
-	var firstURL = 'https://api.spotify.com/v1/users/' + app.userId + '/playlists/' + app.selection2 + '/tracks';
-	getTracks( app, firstURL, 2 );
-	
+	var firstURL = 'https://api.spotify.com/v1/users/' + app.playlistUsers[ app.selection2 ] + '/playlists/' + app.selection2 + '/tracks';
+	getTracks( app, firstURL, 2 );	
 }
 
 function setResults( app )

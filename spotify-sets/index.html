@@ -41,9 +41,10 @@
             border-radius: 0px;
         }
 
-        .panel
+        .panel, .col-md-7
         {
-            /*border: 1px solid #747474;*/
+            border: 1px solid #282828;
+            border-radius: 4px;
         }
 
         input[type=text]
@@ -122,6 +123,11 @@
         {
             color: white;
             text-transform: uppercase;
+        }
+
+        #auth-expired
+        {
+            color: black;
         }
 
         .nano { background: #171717; width: 425px; height: 500px; }
@@ -220,6 +226,23 @@
                 </div>
                 <div class="modal-body">
                     <p>The playlist has been created.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="auth-expired">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Page Expired</h4>
+                </div>
+                <div class="modal-body">
+                    <p>As i'm using some crappy front end spotify authorisation you need to refresh the page now.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
