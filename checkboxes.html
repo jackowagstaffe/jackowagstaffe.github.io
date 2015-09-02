@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Meta, title, CSS, favicons, etc. -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+        <style>
+        .check-grid
+        {
+            max-width: 500px;
+        }
+        .check-header
+        {
+            text-align: center;
+        }
+        .check-cell
+        {
+            width: 100px;
+            height: 41px;
+            position: relative;
+        }
+        .check-cell input[type=checkbox]
+        {
+            visibility: hidden;
+        }
+        .check-cell label:before
+        {
+            width: 100px;
+            height: 40px;
+            display: block;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            font-family: FontAwesome;
+            font-size: 27px;
+            text-align: center;
+            content: '\f00d';
+            color: #ddd;
+        }
+        .check-cell input[type=checkbox] + label:after
+        {
+            width: 100px;
+            height: 40px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            opacity: 0;
+            #background:  #ECF9FF;
+            background: white;
+            text-shadow: 3px 3px 7px #999;
+            color: #2196f3;
+            font-family: FontAwesome;
+            font-size: 27px;
+            text-align: center;
+            content: '\f00c';
+        }
+        .check-cell input[type=checkbox]:checked + label:after
+        {
+            opacity: 1;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-21 col-sm-12">
+                    <table class="table check-grid">
+                        <thead>
+                            <tr>
+                                <th>Detail</th>
+                                <th class="check-header">Optional</th>
+                                <th class="check-header">Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>First Name</td>
+                                <td class="check-cell">
+                                    <input type="checkbox" value="optional" id="thing1" />
+                                    <label for="thing1"></label>
+                                </td>
+                                <td class="check-cell">
+                                    <input type="checkbox" value="required" id="thing2" />
+                                    <label for="thing2"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>County</td>
+                                <td class="check-cell">
+                                    <input type="checkbox" value="optional" id="thing3" />
+                                    <label for="thing3"></label>
+                                </td>
+                                <td class="check-cell">
+                                    <input type="checkbox" value="required" id="thing4" />
+                                    <label for="thing4"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>City</td>
+                                <td class="check-cell">
+                                    <input type="checkbox" value="optional" id="thing5" />
+                                    <label for="thing5"></label>
+                                </td>
+                                <td class="check-cell">
+                                    <input type="checkbox" value="required" id="thing6" />
+                                    <label for="thing6"></label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
