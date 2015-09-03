@@ -5,7 +5,7 @@ var spotifyAPI = "https://accounts.spotify.com/authorize";
 var APIParams = {
 	client_id: '0ea4dab611da40cea8d888db992c25d2',
 	response_type: 'token',
-	redirect_uri: 'http://127.0.0.1/spotify-sets',
+	redirect_uri: 'http://jackowagstaffe.me/spotify-sets',
 	scope: 'playlist-read-private playlist-modify-public playlist-modify-private'
 }
 
@@ -47,13 +47,13 @@ function gotAuth( auth )
 	});
 }
 
-function authExpired() 
+function authExpired()
 {
 	$('#auth-expired').modal('show');
 }
 
 //For once the user ID has been saved
-function gotId( userId, auth ) 
+function gotId( userId, auth )
 {
 	var app = {
 			userId: userId,
@@ -67,8 +67,8 @@ function gotId( userId, auth )
 	getPlayList( app, firstURL );
 }
 
-//saves the list of user's playlists to app.playlists . 
-function getPlayList( app, nextURL ) 
+//saves the list of user's playlists to app.playlists .
+function getPlayList( app, nextURL )
 {
 	$.ajax({
 	   url: nextURL,
@@ -80,10 +80,10 @@ function getPlayList( app, nextURL )
 	       		app.playlists[ item['id'] ] = item['name'] ;
 	       		app.playlistUsers[ item['id'] ] = item['owner']['id'];
 	       });
-	       
+
 	       if ( response.next )
 	       {
-	       		getPlayList( app, response.next ) 
+	       		getPlayList( app, response.next )
 	       }
 	       else
 	       {
@@ -102,7 +102,7 @@ function gotPlaylists( app )
 		printPList( app,  $("#pFilter").val() );
 	});
 
-	
+
 }
 
 //update when a playslist is swapped
@@ -133,7 +133,7 @@ function playlistChanged( app )
 function genResult( event )
 {
 	var app = event.data.app;
-	
+
 	app.playlistTrackNames1 = {};
 	app.playlistTrackNames2 = {};
 	app.playlistTracks1 = new Array();
@@ -145,18 +145,18 @@ function genResult( event )
 	var firstURL = 'https://api.spotify.com/v1/users/' + app.playlistUsers[ app.selection1 ] + '/playlists/' + app.selection1 + '/tracks';
 	getTracks( app, firstURL, 1 );
 	var firstURL = 'https://api.spotify.com/v1/users/' + app.playlistUsers[ app.selection2 ] + '/playlists/' + app.selection2 + '/tracks';
-	getTracks( app, firstURL, 2 );	
+	getTracks( app, firstURL, 2 );
 }
 
 function setResults( app )
 {
-	//Do the calculations. 
+	//Do the calculations.
 	setOperation = $("#setOperation").val();
 	switch (setOperation)
 	{
 		case "which are not in" :
 			setDifference( app );
-			break; 
+			break;
 		case "which are also in" :
 			setIntersection( app );
 			break;
@@ -295,7 +295,7 @@ function sendTrackSet( app, track_set, pId )
     });
 }
 
-function getTracks( app, nextURL, pNo ) 
+function getTracks( app, nextURL, pNo )
 {
 	$.ajax({
 	   url: nextURL,
@@ -314,12 +314,12 @@ function getTracks( app, nextURL, pNo )
 	       			app.playlistTrackNames2[ item.track['id'] ] = "" + item.track['name'] + " - " + item.track['artists'][0]['name'];
 	       			app.playlistTracks2.push( item.track['id'] );
 	       		}
-	       		
+
 	       });
-	       
+
 	       if ( response.next )
 	       {
-	       		getTracks( app, response.next, pNo ) 
+	       		getTracks( app, response.next, pNo )
 	       }
 	       else
 	       {
@@ -400,7 +400,7 @@ function printPList( app, filter )
 						.append('<td><input class="btn btn-default but2" type="button" value="2" id="' + pl + '"></td>')
 				);
 		}
-		
+
 	}
 	updateSelects( app );
 	$(".but1").off().click({app: app}, clickBut1);
@@ -410,7 +410,7 @@ function printPList( app, filter )
 		{
 			event.data.app.selection1 = $(this).attr( 'id' );
 			playlistChanged( event.data.app );
-		}	 
+		}
 	}
 
 	$(".but2").off().click({app: app}, clickBut2);
@@ -420,7 +420,7 @@ function printPList( app, filter )
 		{
 			event.data.app.selection2 = $(this).attr( 'id' );
 			playlistChanged( event.data.app );
-		}	 
+		}
 	}
 
     $(".nano").nanoScroller();
