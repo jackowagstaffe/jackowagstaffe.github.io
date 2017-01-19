@@ -5,7 +5,7 @@ var spotifyAPI = "https://accounts.spotify.com/authorize";
 var APIParams = {
 	client_id: '0ea4dab611da40cea8d888db992c25d2',
 	response_type: 'token',
-	redirect_uri: 'http://jackowagstaffe.me/spotify-sets',
+	redirect_uri: window.location.hostname + '/spotify-sets',
 	scope: 'playlist-read-private playlist-modify-public playlist-modify-private'
 }
 
