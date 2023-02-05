@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<head>
+    <title>Search Beatport</title>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: rgb(44, 44, 44);
+            color: white;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            margin-top: 30px;
+            border: 1px solid rgb(136, 136, 136);
+            padding: 15px;
+        }
+        form input {
+            padding: 7px 10px;
+            font-size: large;
+            border-radius: 7px;
+            border: 0;
+            width: 680px;
+            margin-bottom: 10px;
+
+        }
+        form input:focus, form button:focus {
+            outline-style: none;
+        }
+        form button {
+            padding: 7px 10px;
+            font-size: large;
+            border-radius: 7px;
+            width: 700px;
+            border: 0;
+            margin-bottom: 10px;
+            background-color: rgb(154, 255, 154);
+        }
+        #clearForm button {
+            background-color: rgb(255, 140, 140);
+        }
+    </style>
+</head>
+<html>
+    <body>
+        <div class="container">
+            <h1>Search Beatport</h1>
+
+            <form id="searchForm">
+                <input class="searchBox" type="text" name="search" />
+                <ul id="terms"></ul>
+                <button type="submit">search</button>
+            </form>
+            <form id="clearForm">
+                <button type="submit">clear</button>
+            </form>
+        </div>
+
+        <script>
+            searchTerms = []
+
+            const drawSearchTerms = () => {
+                document.querySelector('#terms').innerHTML = searchTerms.map(term => `<li>${term}</li>`).join("");
+            }
+
+            document.querySelector('.searchBox').onkeypress = (event) => {
+                if (event.code === 'Enter') {
+                    event.preventDefault();
+                    searchTerms.push(event.target.value);
+                    drawSearchTerms();
+                    event.target.value = "";
+                    return false;
+                }
+                
+            }
+            document.querySelector("#searchForm").addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                searchTerms.forEach(term => {
+                    let search = term.split(" ").join("+");
+                    let beatportUrl = `https://www.beatport.com/search/tracks?q=${search}&per-page=10`;
+                    window.open(beatportUrl)
+                })
+
+                return false;
+            });
+            document.querySelector("#clearForm").addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                searchTerms = [];
+                drawSearchTerms();
+
+                return false;
+            });
+        </script>
+    </body>
+</html>
